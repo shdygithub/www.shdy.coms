@@ -1,0 +1,234 @@
+package www.shdy.mvp.viewUi.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hjq.toast.ToastUtils;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
+
+import butterknife.Bind;
+import butterknife.OnClick;
+
+import www.shdy.R;
+import www.shdy.base.BaseMvpActivity;
+import www.shdy.entity.LogginBean;
+import www.shdy.mvp.contract.LoginContract;
+import www.shdy.mvp.presenter.LoginPresenter;
+import www.shdy.mvp.viewUi.activity.home_ui.HomeActivity;
+import www.shdy.utils.AppUser;
+import www.shdy.utils.Dolas;
+
+public class MainActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.loginView {
+
+
+    @Bind(R.id.phone_number)
+    EditText phoneNumber;
+    @Bind(R.id.phone_clean)
+    Button phoneClean;
+    @Bind(R.id.phone_password)
+    EditText phonePassword;
+    @Bind(R.id.phone_gone)
+    Button phoneGone;
+    @Bind(R.id.btn)
+    Button btn;
+    @Bind(R.id.password)
+    TextView password;
+    @Bind(R.id.relateive_ground)
+    RelativeLayout relateiveGround;
+    @Bind(R.id.phone_register)
+    LinearLayout phoneRegister;
+    @Bind(R.id.linear)
+    LinearLayout linear;
+    private String TAG = ">>>";
+    private boolean CheckGone = false;
+    private boolean CheckClean = false;
+
+
+    @Override
+    protected LoginPresenter onLoadPresenter() {
+        return new LoginPresenter();
+    }
+
+    @Override
+    protected int getLayoutResource() {
+
+
+
+        return R.layout.activity_main;
+
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        //让布局向上移来显示软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    protected void onInitialization(Bundle bundle) {
+
+        linear.setPadding(0, 0, 0, getNavbarHeight());
+
+        phonePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());//隐藏密码
+    }
+
+
+    @Override
+    public void loginSuccess(LogginBean logginBean) {
+
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        AppUser.login(logginBean);
+        startActivity(intent);
+    }
+
+    @Override
+    public void loginFailed(String msg) {
+
+
+         ToastUtils.show(msg);
+    }
+
+    @Override
+    public void showLoading() {
+
+
+        Dolas.Doals(this);
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+        Dolas.DoalsDimess(this);
+    }
+
+    public void QQ(View view) {
+        authorization(SHARE_MEDIA.QQ);
+    }
+
+    public void weiXin(View view) {
+        authorization(SHARE_MEDIA.WEIXIN);
+    }
+
+
+    //授权
+    private void authorization(SHARE_MEDIA share_media) {
+        UMShareAPI.get(this).getPlatformInfo(this, share_media, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+                Log.d(TAG, "onStart " + "授权开始");
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                Log.d(TAG, "onComplete " + "授权完成");
+
+                //sdk是6.4.4的,但是获取值的时候用的是6.2以前的(access_token)才能获取到值,未知原因
+                String uid = map.get("uid");
+                String openid = map.get("openid");//微博没有
+                String unionid = map.get("unionid");//微博没有
+                String access_token = map.get("access_token");
+                String refresh_token = map.get("refresh_token");//tengweixin_icon,qq,微博都没有获取到
+                String expires_in = map.get("expires_in");
+                String name = map.get("name");
+                String gender = map.get("gender");
+                String iconurl = map.get("iconurl");
+
+                Toast.makeText(getApplicationContext(), "name=" + name + ",gender=" + gender, Toast.LENGTH_SHORT).show();
+
+                //拿到信息去请求登录接口。。。
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                Log.d(TAG, "onError " + "授权失败");
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                Log.d(TAG, "onCancel " + "授权取消");
+            }
+        });
+    }
+
+
+    //TODO  QQ 回调
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @OnClick({R.id.phone_clean, R.id.phone_gone, R.id.btn, R.id.password, R.id.phone_register})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.phone_clean:
+
+
+                if (CheckClean == false) {
+
+                    phoneNumber.getText().clear();
+
+                    CheckClean = true;
+                } else {
+
+                    CheckClean = false;
+                }
+                break;
+            case R.id.phone_gone:
+
+
+                if (CheckGone == false) {
+
+                    phonePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());//显示密码
+                    CheckGone = true;
+                } else {
+
+                    phonePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());//隐藏密码
+                    CheckGone = false;
+                }
+                phonePassword.setSelection(TextUtils.isEmpty(phonePassword.getText()) ? 0 : phonePassword.length());//光标挪到最后
+
+                break;
+            case R.id.btn:
+
+                mPresenter.login(phoneNumber.getText().toString(), phonePassword.getText().toString());
+
+
+                break;
+            case R.id.password:
+
+                break;
+            case R.id.phone_register:
+//
+//                Intent intent1 = new Intent(this, RegisterActivity.class);
+//                startActivity(intent1);
+//                finish();
+                break;
+        }
+    }
+
+
+}

@@ -1,0 +1,174 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "www.shdy"
+        minSdkVersion 22
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            // 显式声明支持注解
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+        ndk {
+
+            abiFilters "armeabi-v7a", "x86", "mips"
+
+        }
+
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${defaultConfig.applicationId}_v${defaultConfig.versionName}_" + System.currentTimeMillis() + ".apk"
+                }
+            }
+        }
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('winroadkey.jks')
+            storePassword "android"
+            keyAlias "winroad"
+            keyPassword "android"
+        }
+
+        debug {
+            storeFile file('winroadkey.jks')
+            storePassword "android"
+            keyAlias "winroad"
+            keyPassword "android"
+        }
+
+    }
+}
+
+dependencies {
+    compile 'com.android.support:design:27.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.ldoublem.loadingview:loadingviewlib:1.0'
+
+    //okhttp
+    api 'com.zhy:okhttputils:2.6.2'
+
+    //状态栏工具类
+    api 'com.jaeger.statusbaruitl:library:1.3.6'
+
+    //butterknife
+    api 'com.jakewharton:butterknife:7.0.1'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
+    //基于Rxjava+Retrofit封装的网络请求框架
+    api 'io.reactivex:rxandroid:1.2.1'
+    api 'io.reactivex:rxjava:1.3.0'
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
+    api 'com.google.code.gson:gson:2.8.2'
+    api 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation 'com.jude:easyrecyclerview:4.4.2'
+    implementation 'com.zyao89:zloading:1.2.0'
+
+    //多状态视图
+    api 'com.classic.common:multiple-status-view:1.2'
+
+    //底部导航栏
+    implementation 'com.github.chaychan:BottomBarLayout:1.1.2'
+
+    //圆角图片
+    api 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    //glide
+    api 'com.github.bumptech.glide:glide:3.8.0'
+
+    //版本 23以上（必须）
+    implementation 'com.android.support:design:27+'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'
+
+    //TODO 屏幕适配
+    implementation 'me.jessyan:autosize:1.1.2'
+
+    //TODO  EvEntBus
+    implementation 'org.greenrobot:eventbus:3.0.0'
+
+    //吐司工具类
+    implementation 'com.hjq:toast:5.0'
+
+    //TitleBar
+    implementation 'com.kongzue.titlebar:titlebar:1.2.4'
+    implementation 'com.noober.backgorund:core:1.0.5'
+
+    //友盟
+    implementation files('libs/umeng-common-1.5.4.jar')
+    implementation files('libs/umeng-share-core-6.9.4.jar')
+    implementation files('libs/umeng-share-QQ-simplify-6.9.4.jar')
+    implementation files('libs/umeng-sharetool-6.9.4.jar')
+    implementation files('libs/umeng-share-wechat-simplify-6.9.4.jar')
+    implementation 'com.orhanobut:logger:2.2.0'
+    implementation 'com.xhb:xbanner:1.5.1'
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
+
+    //图片上传框架
+    implementation 'com.kongzue.takephoto:takephoto:2.0.8'
+
+    //图片选择框架
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
+
+
+    //TODO  顶部导航栏
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    //腾讯bug管理平台
+    implementation 'com.tencent.bugly:nativecrashreport:3.3.0'
+    implementation project(':library')
+
+
+    implementation files('libs/fastjson-1.2.9.jar')
+    implementation 'com.kongzue.baseokhttp:baseokhttp:2.1.6'
+    implementation 'com.kongzue.dialog:dialog:2.4.7'
+    implementation files('libs/libammsdk.jar')
+
+    //TODO  FlycoTabLayout   顶部导航栏
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    //鲁班  压缩框架
+    implementation 'top.zibin:Luban:1.1.8'
+}
