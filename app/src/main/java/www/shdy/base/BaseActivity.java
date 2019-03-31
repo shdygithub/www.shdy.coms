@@ -24,7 +24,7 @@ import www.shdy.R;
 import www.shdy.utils.AppManager;
 
 /**
- * 基类
+ *
  * @author Mr.HanWenrui
  */
 public abstract class BaseActivity extends AppCompatActivity {

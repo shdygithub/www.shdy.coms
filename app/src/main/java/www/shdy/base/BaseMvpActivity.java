@@ -38,7 +38,6 @@ import www.shdy.basemvp.IPresenter;
 import www.shdy.basemvp.IView;
 import www.shdy.utils.AppManager;
 
-//基类
 public abstract class BaseMvpActivity<P extends IPresenter> extends AppCompatActivity implements IView {
     private CompositeSubscription mCompositeSubscription;
     /**

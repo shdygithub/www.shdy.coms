@@ -13,7 +13,6 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import butterknife.ButterKnife;
 
-//基类
 
 public abstract class BaseFragment extends Fragment {
     /** 是否可见 */
