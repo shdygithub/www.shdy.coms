@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hjq.toast.ToastUtils;
+import com.orhanobut.logger.Logger;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -26,6 +27,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import www.shdy.R;
 import www.shdy.base.BaseMvpActivity;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 
 import www.shdy.mvp.contract.LoginContract;
@@ -34,6 +36,7 @@ import www.shdy.utils.AppUser;
 
 import www.shdy.utils.Dolas;
 import www.shdy.utils.SPUtils;
+import www.shdy.widget.CountDownButton;
 
 public class MainActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.loginView {
 
@@ -46,15 +49,15 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
 
     @Bind(R.id.btn)
     Button btn;
-    @Bind(R.id.password)
-    TextView password;
+    @Bind(R.id.text_h5)
+    TextView texth5;
     @Bind(R.id.relateive_ground)
     RelativeLayout relateiveGround;
 
     @Bind(R.id.linear)
     LinearLayout linear;
     @Bind(R.id.code_btn)
-    Button codeBtn;
+    CountDownButton codeBtn;
     @Bind(R.id.code_layout)
     RelativeLayout codeLayout;
     @Bind(R.id.weix_btn)
@@ -112,6 +115,20 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     }
 
     @Override
+    public void loginCodeSuccess(HttpCodeBean codeBean) {
+
+        codeBtn.start();
+        ToastUtils.show(codeBean.getValidateCode());
+    }
+
+
+    @Override
+    public void loginCodeFailed(String mag) {
+
+        Logger.e("验证码"+mag);
+    }
+
+    @Override
     public void showLoading() {
 
 
@@ -156,8 +173,8 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
                 String gender = map.get("gender");
                 String iconurl = map.get("iconurl");
 
-                Toast.makeText(getApplicationContext(), "name=" + name + ",gender=" + gender, Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(), "openid=" + openid + ",gender=" + gender, Toast.LENGTH_SHORT).show();
+                Logger.w("openid=" + openid );
                 //拿到信息去请求登录接口。。。
             }
 
@@ -182,7 +199,7 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     }
 
 
-    @OnClick({R.id.btn, R.id.password, R.id.code_btn,R.id.weix_btn})
+    @OnClick({R.id.btn, R.id.text_h5, R.id.code_btn,R.id.weix_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -198,19 +215,23 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
 
 
                 break;
-            case R.id.password:
+            case R.id.text_h5:
 
                 break;
 
             case R.id.code_btn:
+
                 ToastUtils.show("验证码");
-              //  mPresenter.HttpCode();
+               mPresenter.HttpCode(phoneNumber.getText().toString());
+
 
 
                 break;
             case R.id.weix_btn:
 
                 weiXin(view);
+
+
                 break;
 //            case R.id.phone_register:
 ////

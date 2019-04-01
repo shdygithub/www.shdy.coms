@@ -7,6 +7,7 @@ import www.shdy.data.callback.LoadTaskCallback;
 
 import www.shdy.entity.HomeBean;
 import www.shdy.entity.HomeFourNameBean;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
@@ -31,7 +32,7 @@ public interface TasksDataSource {
     /**
      * 登录 验证码
      */
-    Subscription httpcode( LoadTaskCallback<LogginBean> callback);
+    Subscription httpcode(String phone, LoadTaskCallback<HttpCodeBean> callback);
 
   //  Subscription homein(LoadTaskCallback<UserInfoBean> callback);
 

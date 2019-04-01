@@ -11,6 +11,7 @@ import www.shdy.data.callback.LoadTaskCallback;
 
 import www.shdy.entity.HomeBean;
 import www.shdy.entity.HomeFourNameBean;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
@@ -88,11 +89,11 @@ public class TasksRepositoryProxy implements TasksDataSource {
 
     //登录 验证码
     @Override
-    public Subscription httpcode( final LoadTaskCallback<LogginBean> callback) {
+    public Subscription httpcode(String phone ,final LoadTaskCallback<HttpCodeBean> callback) {
         return HttpManager.getInstance().createService(ApiService.class)
-                .httpcode()
-                .compose(TransformUtils.<HttpResult<LogginBean>>defaultSchedulers())
-                .subscribe(new HttpResultSubscriber<LogginBean>() {
+                .httpcode(phone)
+                .compose(TransformUtils.<HttpResult<HttpCodeBean>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<HttpCodeBean>() {
                     @Override
                     public void onStart() {
                         callback.onStart();
@@ -105,7 +106,7 @@ public class TasksRepositoryProxy implements TasksDataSource {
                     }
 
                     @Override
-                    public void onSuccess(LogginBean logginBean) {
+                    public void onSuccess(HttpCodeBean logginBean) {
 
                         callback.onTaskLoaded(logginBean);
                     }

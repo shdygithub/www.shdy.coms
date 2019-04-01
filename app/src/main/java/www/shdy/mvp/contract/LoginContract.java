@@ -3,6 +3,7 @@ package www.shdy.mvp.contract;
 
 import www.shdy.basemvp.IModel;
 import www.shdy.basemvp.IView;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 
 /**
@@ -15,7 +16,7 @@ public interface LoginContract {
 
         void login(String username, String pwd);
 
-        void HttpCode();
+        void HttpCode(String phone);
     }
 
     interface loginView extends IView {
@@ -23,6 +24,10 @@ public interface LoginContract {
         void loginSuccess(LogginBean logginBean);
 
         void loginFailed(String msg);
+
+        void loginCodeSuccess(HttpCodeBean codeBean);
+
+        void loginCodeFailed(String mag);
 
         void showLoading();
 

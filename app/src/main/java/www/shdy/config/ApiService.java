@@ -5,12 +5,14 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
 import www.shdy.entity.HomeBean;
 import www.shdy.entity.HomeFourNameBean;
 import www.shdy.entity.HomeThreeBean;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.IntegralDetalistBean;
 import www.shdy.entity.IntegralHomeBean;
 import www.shdy.entity.ItemZanBean;
@@ -61,15 +63,13 @@ public interface ApiService {
     @POST("index.php?m=mobile&f=login")
     Observable<HttpResult<LogginBean>> login(@Query("mobile") String mobile, @Query("password") String psd);
 
-    /**
+    /** 去钓鱼
      * 用户登录 验证码
      * 方式:POST
      * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
      */
-
-
-    @POST("")
-    Observable<HttpResult<LogginBean>> httpcode();
+    @POST("user/getValidateCode/{phone}")
+    Observable<HttpResult<HttpCodeBean>> httpcode(@Path("phone") String phone);
 
     /**
      * 新闻

@@ -123,7 +123,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="90dp"
                         android:background="@null"
-                        android:hint="请输入手机号码"
+                        android:hint="请输入验证码"
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="11"
@@ -134,7 +134,8 @@
 
                 </LinearLayout>
 
-                <Button
+                <www.shdy.widget.CountDownButton
+                    android:gravity="center"
                     android:id="@+id/code_btn"
                     android:textColor="#ffffffff"
                     android:textSize="12sp"
@@ -174,7 +175,7 @@
     </RelativeLayout>
     <TextView
         android:layout_gravity="center"
-        android:id="@+id/password"
+        android:id="@+id/text_h5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="点击登录按钮代表您已同意用户协议和隐私政策"

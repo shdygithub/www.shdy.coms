@@ -9,6 +9,7 @@ import com.hjq.toast.ToastUtils;
 import rx.Subscription;
 import www.shdy.basemvp.BasePresenter;
 import www.shdy.data.callback.LoadTaskCallback;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.mvp.contract.LoginContract;
 import www.shdy.remote.TasksRepositoryProxy;
@@ -65,14 +66,20 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
 
     //登录验证码
     @Override
-    public void HttpCode() {
+    public void HttpCode(String phone) {
 
-        Subscription httpcode = TasksRepositoryProxy.getInstance().httpcode( new LoadTaskCallback<LogginBean>() {
+
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtils.show("请填写手机号码");
+            return;
+        }
+
+        Subscription httpcode = TasksRepositoryProxy.getInstance().httpcode(phone, new LoadTaskCallback<HttpCodeBean>() {
             @Override
-            public void onTaskLoaded(LogginBean logginBean) {
+            public void onTaskLoaded(HttpCodeBean httpCodeBean) {
 
-                Log.i(TAG, "onTaskLoaded: "+logginBean.getUsername());
-                getView().loginSuccess(logginBean);
+                Log.i(TAG, "onTaskLoaded: "+httpCodeBean.getCode());
+                getView().loginCodeSuccess(httpCodeBean);
             }
 
             @Override

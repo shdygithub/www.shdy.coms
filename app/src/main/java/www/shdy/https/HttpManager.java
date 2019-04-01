@@ -114,7 +114,7 @@ public class HttpManager {
                 return chain.proceed(request);
             }
         });
-        builder.addNetworkInterceptor(new CacheInterceptotHeader(ShdyApplication.getInstance().getApplicationContext()));
+      //  builder.addNetworkInterceptor(new CacheInterceptotHeader(ShdyApplication.getInstance().getApplicationContext()));
         return builder.build();
     }
 
