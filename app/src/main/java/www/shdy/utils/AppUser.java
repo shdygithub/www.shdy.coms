@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import www.shdy.ShdyApplication;
 import www.shdy.entity.LogginBean;
+import www.shdy.entity.LogginsBean;
 
 /**
 
@@ -14,18 +15,18 @@ import www.shdy.entity.LogginBean;
 
 public class AppUser {
 
-    private static LogginBean logginBean;
+    private static LogginsBean logginBean;
 
     public static void init() {
         String userInfo = SPUtils.getString(ShdyApplication.getInstance().getApplicationContext(), "userInfo", "");
         if (!TextUtils.isEmpty(userInfo)) {
-            logginBean = GsonUtil.newGson().fromJson(userInfo, LogginBean.class);
+            logginBean = GsonUtil.newGson().fromJson(userInfo, LogginsBean.class);
         }
     }
 
-    public static LogginBean getUserInfoBean() {
+    public static LogginsBean getUserInfoBean() {
         if (logginBean == null) {
-            return GsonUtil.newGson().fromJson("{}", LogginBean.class);
+            return GsonUtil.newGson().fromJson("{}", LogginsBean.class);
         }
         return logginBean;
     }
@@ -39,7 +40,7 @@ public class AppUser {
      * 登录成功时调用
      * @param logginBean
      */
-    public static void login(LogginBean logginBean) {
+    public static void login(LogginsBean logginBean) {
         setUserInfo(logginBean);
     }
 
@@ -47,7 +48,7 @@ public class AppUser {
      * 刷新用户信息时调用
      * @param logginBean
      */
-    public static void setUserInfo(LogginBean logginBean) {
+    public static void setUserInfo(LogginsBean logginBean) {
         AppUser.logginBean = logginBean;
         SPUtils.putString(ShdyApplication.getInstance().getApplicationContext(), "userInfo", GsonUtil.newGson().toJson(logginBean));
     }

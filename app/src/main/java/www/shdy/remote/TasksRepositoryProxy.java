@@ -3,6 +3,7 @@ package www.shdy.remote;
 import android.util.Log;
 
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Subscription;
@@ -13,6 +14,7 @@ import www.shdy.entity.HomeBean;
 import www.shdy.entity.HomeFourNameBean;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
+import www.shdy.entity.LogginsBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
@@ -55,11 +57,12 @@ public class TasksRepositoryProxy implements TasksDataSource {
 
     //登录
     @Override
-    public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginBean> callback) {
+    public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginsBean> callback) {
+
         return HttpManager.getInstance().createService(ApiService.class)
                 .login(usrname, pwd)
-                .compose(TransformUtils.<HttpResult<LogginBean>>defaultSchedulers())
-                .subscribe(new HttpResultSubscriber<LogginBean>() {
+                .compose(TransformUtils.<HttpResult<LogginsBean>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<LogginsBean>() {
                     @Override
                     public void onStart() {
                         callback.onStart();
@@ -72,7 +75,7 @@ public class TasksRepositoryProxy implements TasksDataSource {
                     }
 
                     @Override
-                    public void onSuccess(LogginBean logginBean) {
+                    public void onSuccess(LogginsBean logginBean) {
 
                         callback.onTaskLoaded(logginBean);
                     }

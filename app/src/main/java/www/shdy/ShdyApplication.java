@@ -206,8 +206,8 @@ public  class ShdyApplication extends BaseApplication {
          * 注意：如果您之前使用过Bugly SDK，请将以下这句注释掉。
          */
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
-        strategy.setAppVersion(AppUser.getUserInfoBean().getUid());
-        strategy.setAppPackageName(AppUser.getUserInfoBean().getUsername());
+      //  strategy.setAppVersion(AppUser.getUserInfoBean().getUid());
+      //  strategy.setAppPackageName(AppUser.getUserInfoBean().getUsername());
         strategy.setAppReportDelay(10000);                          //Bugly会在启动20s后联网同步数据
 
         /*  第三个参数为SDK调试模式开关，调试模式的行为特性如下：

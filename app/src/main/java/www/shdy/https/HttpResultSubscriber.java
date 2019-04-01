@@ -61,7 +61,6 @@ public abstract class HttpResultSubscriber<T> extends Subscriber<HttpResult<T>> 
 
     @Override
     public void onError(Throwable e) {
-        com.orhanobut.logger.Logger.i("onError" + e.getMessage());
 
         if (isUnsubscribed()) {
             return;

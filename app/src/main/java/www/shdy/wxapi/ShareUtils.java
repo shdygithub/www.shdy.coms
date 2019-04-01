@@ -34,7 +34,7 @@ public class ShareUtils {
 
 
     private static void loadData( String shareid, String type) {
-        uid = AppUser.getUserInfoBean().getUid();
+      //  uid = AppUser.getUserInfoBean().getUid();
         HttpRequest.POST(context, ShareApi, new Parameter()
                         .add("uid", uid)
                         .add("share_type", type)

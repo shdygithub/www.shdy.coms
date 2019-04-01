@@ -11,6 +11,7 @@ import www.shdy.basemvp.BasePresenter;
 import www.shdy.data.callback.LoadTaskCallback;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
+import www.shdy.entity.LogginsBean;
 import www.shdy.mvp.contract.LoginContract;
 import www.shdy.remote.TasksRepositoryProxy;
 
@@ -29,16 +30,16 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
             return;
         }
         if (TextUtils.isEmpty(pwd)) {
-            ToastUtils.show("请填写密码");
+            ToastUtils.show("请填写验证码");
             return;
         }
 
 
-        Subscription login = TasksRepositoryProxy.getInstance().login(username, pwd, new LoadTaskCallback<LogginBean>() {
+        Subscription login = TasksRepositoryProxy.getInstance().login(username, pwd, new LoadTaskCallback<LogginsBean>() {
             @Override
-            public void onTaskLoaded(LogginBean logginBean) {
+            public void onTaskLoaded(LogginsBean logginBean) {
 
-                Log.i(TAG, "onTaskLoaded: "+logginBean.getUsername());
+               // Log.i(TAG, "onTaskLoaded: "+logginBean.getUsername());
                 getView().loginSuccess(logginBean);
             }
 
@@ -85,7 +86,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
             @Override
             public void onDataNotAvailable(String msg) {
                 Log.i(TAG, "onDataNotAvailable: "+msg);
-                getView().loginFailed(msg);
+                getView().loginCodeFailed(msg);
             }
 
             @Override

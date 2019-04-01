@@ -30,6 +30,7 @@ import www.shdy.base.BaseMvpActivity;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 
+import www.shdy.entity.LogginsBean;
 import www.shdy.mvp.contract.LoginContract;
 import www.shdy.mvp.presenter.LoginPresenter;
 import www.shdy.utils.AppUser;
@@ -99,7 +100,7 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
 
 
     @Override
-    public void loginSuccess(LogginBean logginBean) {
+    public void loginSuccess(LogginsBean logginBean) {
 
 
         //    Intent intent = new Intent(this, HomeActivity.class);
@@ -125,7 +126,7 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     @Override
     public void loginCodeFailed(String mag) {
 
-        Logger.e("验证码"+mag);
+       ToastUtils.show(mag);
     }
 
     @Override

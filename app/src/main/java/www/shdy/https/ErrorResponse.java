@@ -5,6 +5,25 @@ public class ErrorResponse {
     public int code;
     private String msg;
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(String pageInfo) {
+        this.pageInfo = pageInfo;
+    }
+
+    private String remark;
+    private String pageInfo;
+
     public String getInfo() {
         return info;
     }

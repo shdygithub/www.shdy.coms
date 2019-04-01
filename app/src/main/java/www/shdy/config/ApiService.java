@@ -21,6 +21,7 @@ import www.shdy.entity.KnowledgeItemBean;
 import www.shdy.entity.KnowledgeItemZanBean;
 import www.shdy.entity.KnowledgeSearchBean;
 import www.shdy.entity.LogginBean;
+import www.shdy.entity.LogginsBean;
 import www.shdy.entity.NewsPageBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
@@ -60,8 +61,8 @@ public interface ApiService {
      * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
      */
 
-    @POST("index.php?m=mobile&f=login")
-    Observable<HttpResult<LogginBean>> login(@Query("mobile") String mobile, @Query("password") String psd);
+    @POST("user/login")
+    Observable<HttpResult<LogginsBean>> login(@Path("phone") String mobile, @Path("code") String psd);
 
     /** 去钓鱼
      * 用户登录 验证码

@@ -5,6 +5,7 @@ import www.shdy.basemvp.IModel;
 import www.shdy.basemvp.IView;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
+import www.shdy.entity.LogginsBean;
 
 /**
 
@@ -21,7 +22,7 @@ public interface LoginContract {
 
     interface loginView extends IView {
 
-        void loginSuccess(LogginBean logginBean);
+        void loginSuccess(LogginsBean logginBean);
 
         void loginFailed(String msg);
 

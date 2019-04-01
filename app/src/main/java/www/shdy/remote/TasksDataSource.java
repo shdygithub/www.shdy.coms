@@ -9,6 +9,7 @@ import www.shdy.entity.HomeBean;
 import www.shdy.entity.HomeFourNameBean;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
+import www.shdy.entity.LogginsBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
 
@@ -27,7 +28,7 @@ public interface TasksDataSource {
     /**
      * 登录
      */
-    Subscription login(String usrname, String pwd, LoadTaskCallback<LogginBean> callback);
+    Subscription login(String usrname, String pwd, LoadTaskCallback<LogginsBean> callback);
 
     /**
      * 登录 验证码
