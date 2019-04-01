@@ -1,10 +1,7 @@
 package www.shdy.config;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.http.Body;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -25,7 +22,6 @@ import www.shdy.entity.LogginBean;
 import www.shdy.entity.NewsPageBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
-import www.shdy.entity.UserInfoBean;
 import www.shdy.entity.UsetBean;
 import www.shdy.https.HttpResult;
 
@@ -65,6 +61,15 @@ public interface ApiService {
     @POST("index.php?m=mobile&f=login")
     Observable<HttpResult<LogginBean>> login(@Query("mobile") String mobile, @Query("password") String psd);
 
+    /**
+     * 用户登录 验证码
+     * 方式:POST
+     * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
+     */
+
+
+    @POST("")
+    Observable<HttpResult<LogginBean>> httpcode();
 
     /**
      * 新闻

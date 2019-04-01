@@ -45,6 +45,9 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends AppCompatAct
      */
     protected int currentpage = 1;
 
+    //判断是否需要登录
+    protected boolean IsLogins;
+
     /**
      * 页面数据量
      */
@@ -78,6 +81,7 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends AppCompatAct
         }
     }
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         BackgroundLibrary.inject(this);//BackgroudLibrary
@@ -86,9 +90,9 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends AppCompatAct
 
         if (Build.VERSION.SDK_INT >= 23) {
 
-             ActivityCompat.requestPermissions(this, mPermissionList, 123);
+            ActivityCompat.requestPermissions(this, mPermissionList, 123);
             checkPermissions(mPermissionList);
-        }else {
+        } else {
             List<String> needPermissions = getDeniedPermissions(mPermissionList);
             ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]), REQUEST_CODE_PERMISSION);
         }
@@ -182,7 +186,7 @@ public abstract class BaseMvpActivity<P extends IPresenter> extends AppCompatAct
                 actionBar.setDisplayShowCustomEnabled(true);
                 //设置标题栏字体颜色
                 toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-                toolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.abc_ic_ab_back_mtrl_am_alpha));
+              //  toolbar.setNavigationIcon(getResources().getDrawable(R.mipmap.abc_ic_ab_back_mtrl_am_alpha));
             }
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

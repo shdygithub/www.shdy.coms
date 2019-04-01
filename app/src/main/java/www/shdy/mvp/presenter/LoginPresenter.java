@@ -17,6 +17,9 @@ import static android.content.ContentValues.TAG;
 
 
 public class LoginPresenter extends BasePresenter<LoginContract.loginView> implements LoginContract.loginModel {
+
+
+    //登录
     @Override
     public void login(String username, String pwd) {
 
@@ -55,5 +58,39 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
             }
         });
         addSubscription(login);
+    }
+
+
+
+
+    //登录验证码
+    @Override
+    public void HttpCode() {
+
+        Subscription httpcode = TasksRepositoryProxy.getInstance().httpcode( new LoadTaskCallback<LogginBean>() {
+            @Override
+            public void onTaskLoaded(LogginBean logginBean) {
+
+                Log.i(TAG, "onTaskLoaded: "+logginBean.getUsername());
+                getView().loginSuccess(logginBean);
+            }
+
+            @Override
+            public void onDataNotAvailable(String msg) {
+                Log.i(TAG, "onDataNotAvailable: "+msg);
+                getView().loginFailed(msg);
+            }
+
+            @Override
+            public void onStart() {
+                getView().showLoading();
+            }
+
+            @Override
+            public void onCompleted() {
+                getView().hideLoading();
+            }
+        });
+        addSubscription(httpcode);
     }
 }

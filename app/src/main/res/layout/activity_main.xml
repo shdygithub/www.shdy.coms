@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/linear"
-    android:background="@mipmap/sign_ground"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <RelativeLayout
-        android:layout_marginTop="80dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp">
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/logs_icon" />
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@mipmap/logo" />
     </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/relateive_ground"
         android:layout_width="match_parent"
-        android:layout_height="258dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="50dp"
-        android:background="@mipmap/sign_ground_icon">
+        android:layout_marginRight="50dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
@@ -41,9 +50,9 @@
 
 
             <RelativeLayout
-                android:layout_marginTop="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,9 +63,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/sign_mame_icon" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="12dp"
+                        android:layout_height="17dp"
+                        android:background="@mipmap/phone_icon" />
 
                     <EditText
                         android:id="@+id/phone_number"
@@ -74,14 +84,6 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/phone_clean"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@mipmap/sign_error_icon" />
 
             </RelativeLayout>
 
@@ -89,16 +91,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="3dp"
-                android:background="#b1b1b1"></View>
+                android:layout_marginTop="10dp"
+                android:background="#ffe3e3e3"></View>
 
 
             <RelativeLayout
-                android:layout_marginTop="35dp"
+                android:id="@+id/code_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
 
                 <LinearLayout
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="true"
@@ -107,33 +111,39 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/sign_psd_icon" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="13dp"
+                        android:layout_height="15dp"
+                        android:background="@mipmap/code_icon" />
 
                     <EditText
                         android:id="@+id/phone_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="90dp"
                         android:background="@null"
-                        android:hint="请输入密码"
+                        android:hint="请输入手机号码"
                         android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="11"
                         android:textColorHint="#b1b1b1"
                         android:textSize="14sp" />
+
+
 
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/phone_gone"
-                    android:layout_width="20dp"
-                    android:layout_height="15dp"
+                    android:id="@+id/code_btn"
+                    android:textColor="#ffffffff"
+                    android:textSize="12sp"
+                    android:text="获取验证码"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@mipmap/sign_eye_icon" />
-
+                    android:layout_marginRight="0dp"
+                    android:background="@drawable/code_grren" />
             </RelativeLayout>
 
 
@@ -141,68 +151,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="3dp"
-                android:background="#b1b1b1"></View>
+                android:background="#ffe3e3e3"></View>
 
+            <Button
+                android:layout_marginTop="40dp"
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/main_btn_shape"
+                android:text="登录"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn"
-            android:textSize="15sp"
-            android:text="登录"
-            android:textColor="@color/white"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/main_btn_shape"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="32dp" />
 
-        <TextView
-            android:id="@+id/password"
-            android:layout_marginBottom="30dp"
-            android:layout_centerInParent="true"
-            android:layout_alignParentBottom="true"
-            android:textColor="#626262"
-            android:text="找回密码?"
-            android:textSize="13sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
 
 
     </RelativeLayout>
-
-
-    <RelativeLayout
+    <TextView
+        android:layout_gravity="center"
+        android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp">
-
-        <LinearLayout
-            android:id="@+id/phone_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="没有账号?去"
-                android:textColor="#626262"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="注册"
-                android:textColor="@color/colorTitle"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </RelativeLayout>
+        android:text="点击登录按钮代表您已同意用户协议和隐私政策"
+        android:textColor="#A2A2A2"
+        android:textSize="13sp" />
 
 
+
+        <ImageView
+            android:id="@+id/weix_btn"
+            android:layout_marginTop="75dp"
+            android:layout_gravity="center"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@mipmap/wx_icon" />
+
+</LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

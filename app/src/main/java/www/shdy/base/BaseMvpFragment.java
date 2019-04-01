@@ -23,6 +23,9 @@ public abstract class BaseMvpFragment<P extends IPresenter> extends Fragment imp
      */
     protected boolean isViable = false;
 
+    //判断是否需要登录
+    protected boolean IsLogins;
+
     /**
      * 标志位，标志Fragment已经初始化完成
      */

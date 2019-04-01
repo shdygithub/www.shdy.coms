@@ -11,23 +11,13 @@ import www.shdy.data.callback.LoadTaskCallback;
 
 import www.shdy.entity.HomeBean;
 import www.shdy.entity.HomeFourNameBean;
-import www.shdy.entity.HomeThreeBean;
-import www.shdy.entity.IntegralDetalistBean;
-import www.shdy.entity.IntegralHomeBean;
-import www.shdy.entity.ItemZanBean;
-import www.shdy.entity.KnowledgeBean;
-import www.shdy.entity.KnowledgeItemBean;
-import www.shdy.entity.KnowledgeItemZanBean;
-import www.shdy.entity.KnowledgeSearchBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
-import www.shdy.entity.UserInfoBean;
 import www.shdy.entity.UsetBean;
 import www.shdy.https.HttpManager;
 import www.shdy.https.HttpResult;
 import www.shdy.https.HttpResultSubscriber;
-import www.shdy.utils.RequestBodyHelper;
 import www.shdy.utils.TransformUtils;
 
 /**
@@ -61,10 +51,46 @@ public class TasksRepositoryProxy implements TasksDataSource {
         INSTANCE = null;
     }
 
+
+    //登录
     @Override
     public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginBean> callback) {
         return HttpManager.getInstance().createService(ApiService.class)
                 .login(usrname, pwd)
+                .compose(TransformUtils.<HttpResult<LogginBean>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<LogginBean>() {
+                    @Override
+                    public void onStart() {
+                        callback.onStart();
+                    }
+
+                    @Override
+                    public void onError(String info, String msg, int code) {
+                        com.orhanobut.logger.Logger.i("" + msg);
+                        callback.onDataNotAvailable(msg);
+                    }
+
+                    @Override
+                    public void onSuccess(LogginBean logginBean) {
+
+                        callback.onTaskLoaded(logginBean);
+                    }
+
+
+                    @Override
+                    public void onFinished() {
+                        callback.onCompleted();
+                    }
+                });
+    }
+
+
+
+    //登录 验证码
+    @Override
+    public Subscription httpcode( final LoadTaskCallback<LogginBean> callback) {
+        return HttpManager.getInstance().createService(ApiService.class)
+                .httpcode()
                 .compose(TransformUtils.<HttpResult<LogginBean>>defaultSchedulers())
                 .subscribe(new HttpResultSubscriber<LogginBean>() {
                     @Override
@@ -154,8 +180,6 @@ public class TasksRepositoryProxy implements TasksDataSource {
     }
 
 
-
-
     //TODO 注册
     public Subscription Register(String userid, String code, String psd, final LoadTaskCallback<RegisterBean> callback) {
         return HttpManager.getInstance().createService(ApiService.class)
@@ -224,17 +248,6 @@ public class TasksRepositoryProxy implements TasksDataSource {
 //    }
 
 
-
-
-
-
-
-
-
-
-
-
-
     //TODO 图片上传接口
     public Subscription AnswerUpData(MultipartBody.Part images, final LoadTaskCallback<UpImage> callback) {
         return HttpManager.getInstance().createService(ApiService.class)
@@ -264,8 +277,6 @@ public class TasksRepositoryProxy implements TasksDataSource {
                 });
 
     }
-
-
 
 
     //TODO 个人中心
@@ -364,12 +375,8 @@ public class TasksRepositoryProxy implements TasksDataSource {
     }
 
 
-
-
-
-
     @Override
-    public Subscription HomeoneTitle(String cate_id ,final LoadTaskCallback<HomeBean> callback) {
+    public Subscription HomeoneTitle(String cate_id, final LoadTaskCallback<HomeBean> callback) {
         return HttpManager.getInstance().createService(ApiService.class)
                 .HomeoneTitle(cate_id)
                 .compose(TransformUtils.<HttpResult<HomeBean>>defaultSchedulers())
@@ -397,8 +404,6 @@ public class TasksRepositoryProxy implements TasksDataSource {
                     }
                 });
     }
-
-
 
 
 //    @Override

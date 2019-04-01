@@ -25,6 +25,9 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     protected View contentView;
 
+    //判断是否需要登录
+    protected boolean IsLogins;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

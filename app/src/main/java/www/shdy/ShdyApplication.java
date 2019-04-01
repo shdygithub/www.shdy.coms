@@ -63,6 +63,7 @@ public  class ShdyApplication extends BaseApplication {
 
 
 
+
         DialogSettings.style = DialogSettings.STYLE_IOS;
 
 
@@ -112,10 +113,10 @@ public  class ShdyApplication extends BaseApplication {
         UMShareAPI.get(this);//初始化sdk
         //开启debug模式，方便定位错误，具体错误检查方式可以查看http://dev.umeng.com/social/android/quick-integration的报错必看，正式发布，请关闭该模式
 
-        UMConfigure.init(this,"5c135015b465f53ade00003f"
+        UMConfigure.init(this,"5c98444b3fc195a0c80005eb"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");//58edcfeb310c93091c000be2 5965ee00734be40b580001a0
 
-        PlatformConfig.setWeixin("wxf72585291461d7cd", "6e6d7b96aa80be08fe8d48e8570f2dd9");
+        PlatformConfig.setWeixin("wx2652d74217ba360b", "359792b48d0852a134fae564a02d7254");
         PlatformConfig.setQQZone("1106773281", "2oIyNGbYz4glE6nk");
 
         initBugly();

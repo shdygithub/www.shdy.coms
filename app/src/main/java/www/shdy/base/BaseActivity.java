@@ -34,6 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected int currentpage = 1;
 
+    //判断是否需要登录
+    protected boolean IsLogins;
+
     /**
      * 页面数据量
      */

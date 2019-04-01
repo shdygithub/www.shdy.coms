@@ -14,6 +14,8 @@ public interface LoginContract {
     interface loginModel extends IModel {
 
         void login(String username, String pwd);
+
+        void HttpCode();
     }
 
     interface loginView extends IView {

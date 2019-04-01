@@ -7,18 +7,8 @@ import www.shdy.data.callback.LoadTaskCallback;
 
 import www.shdy.entity.HomeBean;
 import www.shdy.entity.HomeFourNameBean;
-import www.shdy.entity.HomeThreeBean;
-import www.shdy.entity.IntegralDetalistBean;
-import www.shdy.entity.IntegralHomeBean;
-import www.shdy.entity.ItemZanBean;
-import www.shdy.entity.KnowledgeBean;
-import www.shdy.entity.KnowledgeItemBean;
-import www.shdy.entity.KnowledgeItemZanBean;
-import www.shdy.entity.KnowledgeSearchBean;
 import www.shdy.entity.LogginBean;
-import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
-import www.shdy.entity.UserInfoBean;
 import www.shdy.entity.UsetBean;
 
 /**
@@ -37,6 +27,11 @@ public interface TasksDataSource {
      * 登录
      */
     Subscription login(String usrname, String pwd, LoadTaskCallback<LogginBean> callback);
+
+    /**
+     * 登录 验证码
+     */
+    Subscription httpcode( LoadTaskCallback<LogginBean> callback);
 
   //  Subscription homein(LoadTaskCallback<UserInfoBean> callback);
 

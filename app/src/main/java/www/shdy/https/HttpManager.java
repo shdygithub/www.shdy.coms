@@ -110,10 +110,11 @@ public class HttpManager {
                 Request originalRequest = chain.request();
                 Request.Builder requestBuilder = originalRequest.newBuilder();
                 Request request = requestBuilder.build();
+
                 return chain.proceed(request);
             }
         });
-
+        builder.addNetworkInterceptor(new CacheInterceptotHeader(ShdyApplication.getInstance().getApplicationContext()));
         return builder.build();
     }
 

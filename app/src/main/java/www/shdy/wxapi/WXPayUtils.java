@@ -30,7 +30,7 @@ public class WXPayUtils {
      * 调起微信支付的方法,不需要在客户端签名
      **/
     public void toWXPayNotSign(Context context) {
-        iwxapi = WXAPIFactory.createWXAPI(context, "wxf72585291461d7cd"); //初始化微信api
+        iwxapi = WXAPIFactory.createWXAPI(context, "wx2652d74217ba360b"); //初始化微信api
         iwxapi.registerApp(builder.getAppId()); //注册appid  appid可以在开发平台获取
 
         Runnable payRunnable = new Runnable() {  //这里注意要放在子线程
@@ -56,7 +56,7 @@ public class WXPayUtils {
      * 调起微信支付的方法,需要在客户端签名
      **/
     public void toWXPayAndSign(Context context, String appid, final String key) {
-        iwxapi = WXAPIFactory.createWXAPI(context, "wxf72585291461d7cd"); //初始化微信api
+        iwxapi = WXAPIFactory.createWXAPI(context, "wx2652d74217ba360b"); //初始化微信api
         iwxapi.registerApp(appid); //注册appid  appid可以在开发平台获取
         Runnable payRunnable = new Runnable() {  //这里注意要放在子线程
             @Override

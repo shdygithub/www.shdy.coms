@@ -1,7 +1,5 @@
 package www.shdy.utils;
 
-import android.support.v7.widget.GridLayoutManager;
-
 //import www.shdy.mvp.viewUi.adapter.IntegralAdapter;
 //
 //public class HeaderGridLayoutManger extends GridLayoutManager.SpanSizeLookup {

@@ -3,14 +3,13 @@ package www.shdy.mvp.viewUi.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,37 +24,41 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-
 import www.shdy.R;
 import www.shdy.base.BaseMvpActivity;
 import www.shdy.entity.LogginBean;
+
 import www.shdy.mvp.contract.LoginContract;
 import www.shdy.mvp.presenter.LoginPresenter;
-import www.shdy.mvp.viewUi.activity.home_ui.HomeActivity;
 import www.shdy.utils.AppUser;
+
 import www.shdy.utils.Dolas;
+import www.shdy.utils.SPUtils;
 
 public class MainActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.loginView {
 
 
     @Bind(R.id.phone_number)
     EditText phoneNumber;
-    @Bind(R.id.phone_clean)
-    Button phoneClean;
+
     @Bind(R.id.phone_password)
     EditText phonePassword;
-    @Bind(R.id.phone_gone)
-    Button phoneGone;
+
     @Bind(R.id.btn)
     Button btn;
     @Bind(R.id.password)
     TextView password;
     @Bind(R.id.relateive_ground)
     RelativeLayout relateiveGround;
-    @Bind(R.id.phone_register)
-    LinearLayout phoneRegister;
+
     @Bind(R.id.linear)
     LinearLayout linear;
+    @Bind(R.id.code_btn)
+    Button codeBtn;
+    @Bind(R.id.code_layout)
+    RelativeLayout codeLayout;
+    @Bind(R.id.weix_btn)
+    ImageView weixBtn;
     private String TAG = ">>>";
     private boolean CheckGone = false;
     private boolean CheckClean = false;
@@ -69,8 +72,8 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     @Override
     protected int getLayoutResource() {
 
-
-
+        //让布局向上移来显示软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         return R.layout.activity_main;
 
     }
@@ -78,8 +81,7 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        //让布局向上移来显示软键盘
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         super.onCreate(savedInstanceState);
 
     }
@@ -97,16 +99,16 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     public void loginSuccess(LogginBean logginBean) {
 
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        //    Intent intent = new Intent(this, HomeActivity.class);
         AppUser.login(logginBean);
-        startActivity(intent);
+        //    startActivity(intent);
     }
 
     @Override
     public void loginFailed(String msg) {
 
 
-         ToastUtils.show(msg);
+        ToastUtils.show(msg);
     }
 
     @Override
@@ -114,7 +116,6 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
 
 
         Dolas.Doals(this);
-
     }
 
     @Override
@@ -181,52 +182,42 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     }
 
 
-    @OnClick({R.id.phone_clean, R.id.phone_gone, R.id.btn, R.id.password, R.id.phone_register})
+    @OnClick({R.id.btn, R.id.password, R.id.code_btn,R.id.weix_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.phone_clean:
 
 
-                if (CheckClean == false) {
-
-                    phoneNumber.getText().clear();
-
-                    CheckClean = true;
-                } else {
-
-                    CheckClean = false;
-                }
-                break;
-            case R.id.phone_gone:
-
-
-                if (CheckGone == false) {
-
-                    phonePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());//显示密码
-                    CheckGone = true;
-                } else {
-
-                    phonePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());//隐藏密码
-                    CheckGone = false;
-                }
-                phonePassword.setSelection(TextUtils.isEmpty(phonePassword.getText()) ? 0 : phonePassword.length());//光标挪到最后
-
-                break;
             case R.id.btn:
 
+
                 mPresenter.login(phoneNumber.getText().toString(), phonePassword.getText().toString());
+
+                //本地保存用户账号及密码
+                SPUtils.putString(MainActivity.this, "phoneNumber", phoneNumber.getText().toString());
+                SPUtils.putString(MainActivity.this, "phonePassword", phonePassword.getText().toString());
 
 
                 break;
             case R.id.password:
 
                 break;
-            case R.id.phone_register:
-//
-//                Intent intent1 = new Intent(this, RegisterActivity.class);
-//                startActivity(intent1);
-//                finish();
+
+            case R.id.code_btn:
+                ToastUtils.show("验证码");
+              //  mPresenter.HttpCode();
+
+
                 break;
+            case R.id.weix_btn:
+
+                weiXin(view);
+                break;
+//            case R.id.phone_register:
+////
+////                Intent intent1 = new Intent(this, RegisterActivity.class);
+////                startActivity(intent1);
+////                finish();
+//                break;
         }
     }
 
