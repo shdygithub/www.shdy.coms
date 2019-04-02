@@ -4,6 +4,7 @@ import android.util.Log;
 
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -267,12 +268,16 @@ public class TasksRepositoryProxy implements TasksDataSource {
 
                     @Override
                     public void onError(String info, String msg, int code) {
-                        com.orhanobut.logger.Logger.i("" + msg);
+                        Log.e("数据错误",msg);
+                        com.orhanobut.logger.Logger.i("错误数据" + msg);
                         callback.onDataNotAvailable(msg);
                     }
 
                     @Override
                     public void onSuccess(WeixPhoneBean weixLoginBean) {
+
+                        Log.e("数据", String.valueOf(weixLoginBean.getCode()));
+                        Logger.i("数据"+weixLoginBean.getCode());
                         callback.onTaskLoaded(weixLoginBean);
                     }
 

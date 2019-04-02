@@ -34,7 +34,7 @@ public class GsonResponseBodyConverter<T> implements Converter<ResponseBody,T>{
             ErrorResponse errorResponse = gson.fromJson(response,ErrorResponse.class);
             //抛一个自定义ResultException
 
-            throw new ResultException(errorResponse.getCode(),errorResponse.getRemark(),errorResponse.getPageInfo());
+            throw new ResultException(errorResponse.getCode(),errorResponse.getRemark(),errorResponse.getPageInfo(),errorResponse.getInfo());
 
         }
     }

@@ -10,7 +10,19 @@ public class HttpResult<T> extends BaseResponse {
 
     private String info;
 
-    private T data;
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    private String remark;
+
+    private T result;
+
+
 
     public String getMsg() {
         return info;
@@ -30,7 +42,7 @@ public class HttpResult<T> extends BaseResponse {
     }
 
     public T getData() {
-        return data;
+        return result;
     }
 
 }

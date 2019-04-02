@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
+import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -69,8 +70,9 @@ public class WeixPhoneActivity extends BaseMvpActivity<WeixphonePresenter> imple
         switch (view.getId()) {
             case R.id.tiaobtn:
 
-                Intent intent=new Intent();
-                startActivity(intent);
+
+               // Intent intent=new Intent();
+              //  startActivity(intent);
 
                 break;
             case R.id.btn:
@@ -87,6 +89,7 @@ public class WeixPhoneActivity extends BaseMvpActivity<WeixphonePresenter> imple
     @Override
     public void WeixphoneSuccess(WeixPhoneBean weixPhoneBean) {
 
+        Logger.i("数据"+weixPhoneBean.getInfo());
         ToastUtils.show(weixPhoneBean.getCode());
     }
 

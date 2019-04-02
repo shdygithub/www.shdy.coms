@@ -5,9 +5,29 @@ package www.shdy.https;
  */
 
 public class ResultException extends RuntimeException{
-    private int Code;
-    private String msg;
+    public int getCode() {
+        return Code;
+    }
 
+    public void setCode(int code) {
+        Code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
 
     public String getInfo() {
         return info;
@@ -17,21 +37,17 @@ public class ResultException extends RuntimeException{
         this.info = info;
     }
 
+    public ResultException(int code, String msg, String result, String info) {
+        Code = code;
+        this.msg = msg;
+        this.result = result;
+        this.info = info;
+    }
+
+    private int Code;
+    private String msg;
+    private String result;
     private String info;
 
 
-    public ResultException(int Code,String msg,String info){
-        super();
-        this.Code = Code;
-        this.msg = msg;
-        this.info=info;
-    }
-
-    public int getCode() {
-        return Code;
-    }
-
-    public String getMsg(){
-        return msg;
-    }
 }

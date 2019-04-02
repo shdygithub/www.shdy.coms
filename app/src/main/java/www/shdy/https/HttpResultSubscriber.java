@@ -42,12 +42,12 @@ public abstract class HttpResultSubscriber<T> extends Subscriber<HttpResult<T>> 
                 onSuccess(data);
 
             } else {
-                onSuccess((T) t.getMsg());
+                onSuccess((T) t.getRemark());
 
             }
         } else {
 
-            throw new ApiException(t.getCode(), t.getMsg());
+            throw new ApiException(t.getCode(), t.getRemark());
 
         }
     }
@@ -93,7 +93,8 @@ public abstract class HttpResultSubscriber<T> extends Subscriber<HttpResult<T>> 
         } else if (e instanceof ResultException) {
 
             onError(((ResultException) e).getInfo(), ((ResultException) e).getMsg(), ((ResultException) e).getCode());
-            com.orhanobut.logger.Logger.i("" + ((ResultException) e).getMsg() + ((ResultException) e).getInfo() + ((ResultException) e).getCode());
+            com.orhanobut.logger.Logger.i(""+((ResultException) e).getResult()
+                    + ((ResultException) e).getMsg() + ((ResultException) e).getInfo() + ((ResultException) e).getCode());
         }
 
         onFinished();

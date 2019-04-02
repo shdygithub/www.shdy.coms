@@ -123,8 +123,9 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     @Override
     public void loginSuccess(LogginsBean logginBean) {
 
-
         phoneDialogWeix.newInatance().show(getSupportFragmentManager());
+
+        //ToastUtils.show(logginBean.getUserInfo().getNickname());
 
         AppUser.login(logginBean);
 
