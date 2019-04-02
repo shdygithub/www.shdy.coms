@@ -3,6 +3,14 @@ package www.shdy.remote;
 import android.util.Log;
 
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -59,8 +67,37 @@ public class TasksRepositoryProxy implements TasksDataSource {
     @Override
     public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginsBean> callback) {
 
+       // RequestBody bodyusrname= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), usrname);
+
+
+
+//        HashMap<String,String> hashMap =new HashMap<>();
+//        hashMap.put("phone",usrname);
+//        hashMap.put("code",pwd);
+
+        JSONObject  jsusername= new JSONObject();
+
+        JSONObject  requestData=new JSONObject();
+
+        // JSONObject  requestList=new JSONObject();
+
+        try {
+            //requestList.put("data",requestData);
+
+            requestData.put("phone",usrname);
+            requestData.put("code",pwd);
+
+            jsusername.put("datalist",requestData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        //String json= new Gson().toJson(hashMap);
+
+        RequestBody bodypwd= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsusername.toString());
         return HttpManager.getInstance().createService(ApiService.class)
-                .login(usrname, pwd)
+                .login(bodypwd)
                 .compose(TransformUtils.<HttpResult<LogginsBean>>defaultSchedulers())
                 .subscribe(new HttpResultSubscriber<LogginsBean>() {
                     @Override
@@ -87,6 +124,39 @@ public class TasksRepositoryProxy implements TasksDataSource {
                     }
                 });
     }
+
+//    //登录
+//    @Override
+//    public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginsBean> callback) {
+//
+//        return HttpManager.getInstance().createService(ApiService.class)
+//                .login(usrname, pwd)
+//                .compose(TransformUtils.<HttpResult<LogginsBean>>defaultSchedulers())
+//                .subscribe(new HttpResultSubscriber<LogginsBean>() {
+//                    @Override
+//                    public void onStart() {
+//                        callback.onStart();
+//                    }
+//
+//                    @Override
+//                    public void onError(String info, String msg, int code) {
+//                        com.orhanobut.logger.Logger.i("" + msg);
+//                        callback.onDataNotAvailable(msg);
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(LogginsBean logginBean) {
+//
+//                        callback.onTaskLoaded(logginBean);
+//                    }
+//
+//
+//                    @Override
+//                    public void onFinished() {
+//                        callback.onCompleted();
+//                    }
+//                });
+//    }
 
 
 
@@ -122,35 +192,87 @@ public class TasksRepositoryProxy implements TasksDataSource {
                 });
     }
 
+    //   微信登录
+    @Override
+    public Subscription weixlogin(final LoadTaskCallback<Object> callback) {
+        return HttpManager.getInstance().createService(ApiService.class)
+                .weixlogin()
+                .compose(TransformUtils.<HttpResult<Object>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<Object>() {
+                    @Override
+                    public void onStart() {
+                        callback.onStart();
+                    }
 
-//    @Override
-//    public Subscription homein(final LoadTaskCallback<UserInfoBean> callback) {
-//        return HttpManager.getInstance().createService(ApiService.class)
-//                .homein(RequestBodyHelper.creatRequestBody(new HomeinContent()))
-//                .compose(TransformUtils.<HttpResult<UserInfoBean>>defaultSchedulers())
-//                .subscribe(new HttpResultSubscriber<UserInfoBean>() {
-//                    @Override
-//                    public void onStart() {
-//                        callback.onStart();
-//                    }
-//
-//                    @Override
-//                    public void onError(String info, String msg, int code) {
-//                        callback.onDataNotAvailable(msg);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(UserInfoBean userInfoBean) {
-//                        callback.onTaskLoaded(userInfoBean);
-//                    }
-//
-//
-//                    @Override
-//                    public void onFinished() {
-//                        callback.onCompleted();
-//                    }
-//                });
-//    }
+                    @Override
+                    public void onError(String info, String msg, int code) {
+                        com.orhanobut.logger.Logger.i("" + msg);
+                        callback.onDataNotAvailable(msg);
+                    }
+
+                    @Override
+                    public void onSuccess(Object logginBean) {
+
+                        callback.onTaskLoaded(logginBean);
+                    }
+
+
+                    @Override
+                    public void onFinished() {
+                        callback.onCompleted();
+                    }
+                });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @Override

@@ -35,6 +35,28 @@ public interface TasksDataSource {
      */
     Subscription httpcode(String phone, LoadTaskCallback<HttpCodeBean> callback);
 
+    //微信登录
+    Subscription weixlogin( LoadTaskCallback<Object> callback);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //  Subscription homein(LoadTaskCallback<UserInfoBean> callback);
 
     Subscription Homeone(LoadTaskCallback<HomeBean> callback);

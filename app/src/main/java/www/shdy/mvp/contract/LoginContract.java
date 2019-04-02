@@ -18,6 +18,8 @@ public interface LoginContract {
         void login(String username, String pwd);
 
         void HttpCode(String phone);
+
+        void WeixLogin();
     }
 
     interface loginView extends IView {
@@ -29,6 +31,11 @@ public interface LoginContract {
         void loginCodeSuccess(HttpCodeBean codeBean);
 
         void loginCodeFailed(String mag);
+
+        void WeixloginSuccess( );
+
+        void WeixloginFailed(String msg);
+
 
         void showLoading();
 

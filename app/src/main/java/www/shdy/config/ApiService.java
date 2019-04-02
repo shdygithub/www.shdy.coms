@@ -1,7 +1,12 @@
 package www.shdy.config;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -32,6 +37,64 @@ import www.shdy.https.HttpResult;
 public interface ApiService {
 
 
+    /**去钓鱼
+     * 用户登录
+     * 方式:POST
+     * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
+     */
+
+    @POST("user/login")
+    Observable<HttpResult<LogginsBean>> login(@Body RequestBody body);
+
+
+    /** 去钓鱼
+     * 用户登录 验证码
+     * 方式:POST
+     * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
+     */
+    @POST("user/getValidateCode/{phone}")
+    Observable<HttpResult<HttpCodeBean>> httpcode(@Path("phone") String phone);
+
+
+
+    //微信登录
+    @POST("")
+    Observable<HttpResult<Object>> weixlogin();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * home_btn_icon
      */
@@ -54,23 +117,6 @@ public interface ApiService {
     @POST("index.php?m=mobile")
     Observable<HttpResult<HomeBean>> HomeoneTitle(@Query("cate_id") String cate_id);
 
-
-    /**
-     * 用户登录
-     * 方式:POST
-     * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
-     */
-
-    @POST("user/login")
-    Observable<HttpResult<LogginsBean>> login(@Path("phone") String mobile, @Path("code") String psd);
-
-    /** 去钓鱼
-     * 用户登录 验证码
-     * 方式:POST
-     * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
-     */
-    @POST("user/getValidateCode/{phone}")
-    Observable<HttpResult<HttpCodeBean>> httpcode(@Path("phone") String phone);
 
     /**
      * 新闻

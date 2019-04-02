@@ -39,7 +39,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
             @Override
             public void onTaskLoaded(LogginsBean logginBean) {
 
-               // Log.i(TAG, "onTaskLoaded: "+logginBean.getUsername());
                 getView().loginSuccess(logginBean);
             }
 
@@ -100,5 +99,36 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
             }
         });
         addSubscription(httpcode);
+    }
+
+    @Override
+    public void WeixLogin() {
+
+
+        Subscription weixlogin = TasksRepositoryProxy.getInstance().weixlogin(new LoadTaskCallback<Object>() {
+            @Override
+            public void onTaskLoaded(Object httpCodeBean) {
+
+                Log.i(TAG, "onTaskLoaded: "+httpCodeBean);
+                //getView().loginCodeSuccess("");
+            }
+
+            @Override
+            public void onDataNotAvailable(String msg) {
+                Log.i(TAG, "onDataNotAvailable: "+msg);
+                getView().loginCodeFailed(msg);
+            }
+
+            @Override
+            public void onStart() {
+                getView().showLoading();
+            }
+
+            @Override
+            public void onCompleted() {
+                getView().hideLoading();
+            }
+        });
+        addSubscription(weixlogin);
     }
 }

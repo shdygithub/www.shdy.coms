@@ -38,6 +38,7 @@ import www.shdy.utils.AppUser;
 import www.shdy.utils.Dolas;
 import www.shdy.utils.SPUtils;
 import www.shdy.widget.CountDownButton;
+import www.shdy.widget.widget.PhoneDialog_Weix;
 
 public class MainActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.loginView {
 
@@ -95,7 +96,7 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
 
         linear.setPadding(0, 0, 0, getNavbarHeight());
 
-        phonePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());//隐藏密码
+        phonePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
     }
 
 
@@ -126,7 +127,18 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     @Override
     public void loginCodeFailed(String mag) {
 
-       ToastUtils.show(mag);
+        ToastUtils.show(mag);
+    }
+
+    @Override
+    public void WeixloginSuccess() {
+
+
+    }
+
+    @Override
+    public void WeixloginFailed(String msg) {
+
     }
 
     @Override
@@ -175,8 +187,9 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
                 String iconurl = map.get("iconurl");
 
                 Toast.makeText(getApplicationContext(), "openid=" + openid + ",gender=" + gender, Toast.LENGTH_SHORT).show();
-                Logger.w("openid=" + openid );
-                //拿到信息去请求登录接口。。。
+                Logger.w("openid=" + openid);
+
+                mPresenter.WeixLogin();
             }
 
             @Override
@@ -200,7 +213,7 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
     }
 
 
-    @OnClick({R.id.btn, R.id.text_h5, R.id.code_btn,R.id.weix_btn})
+    @OnClick({R.id.btn, R.id.text_h5, R.id.code_btn, R.id.weix_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -222,9 +235,10 @@ public class MainActivity extends BaseMvpActivity<LoginPresenter> implements Log
 
             case R.id.code_btn:
 
-                ToastUtils.show("验证码");
-               mPresenter.HttpCode(phoneNumber.getText().toString());
+                PhoneDialog_Weix.newInatance().show(getSupportFragmentManager());
 
+                //ToastUtils.show("验证码");
+                //mPresenter.HttpCode(phoneNumber.getText().toString());
 
 
                 break;

@@ -1,4 +1,4 @@
-package www.shdy.widget;
+package www.shdy.widget.widget;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,13 +18,16 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
-
+ * author: xiaohaibin.
+ * time: 2018/7/31
+ * mail:xhb_199409@163.com
+ * github:https://github.com/xiaohaibin
  * describe: BaseDialogFragment
  */
 public abstract class BaseDialogFragment extends DialogFragment {
     protected View contentView;
     private static final String TAG = "BaseDialogFragment";
-    private static final float DEFAULT_DIM = 0.2f;
+    private static final float DEFAULT_DIM = 0.1f;
 
     @Nullable
     @Override
