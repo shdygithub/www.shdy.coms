@@ -66,24 +66,9 @@ public class TasksRepositoryProxy implements TasksDataSource {
     //登录
     @Override
     public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginsBean> callback) {
-
-       // RequestBody bodyusrname= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), usrname);
-
-
-
-//        HashMap<String,String> hashMap =new HashMap<>();
-//        hashMap.put("phone",usrname);
-//        hashMap.put("code",pwd);
-
         JSONObject  jsusername= new JSONObject();
-
         JSONObject  requestData=new JSONObject();
-
-        // JSONObject  requestList=new JSONObject();
-
         try {
-            //requestList.put("data",requestData);
-
             requestData.put("phone",usrname);
             requestData.put("code",pwd);
 
@@ -91,9 +76,6 @@ public class TasksRepositoryProxy implements TasksDataSource {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-        //String json= new Gson().toJson(hashMap);
 
         RequestBody bodypwd= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsusername.toString());
         return HttpManager.getInstance().createService(ApiService.class)
@@ -125,38 +107,6 @@ public class TasksRepositoryProxy implements TasksDataSource {
                 });
     }
 
-//    //登录
-//    @Override
-//    public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginsBean> callback) {
-//
-//        return HttpManager.getInstance().createService(ApiService.class)
-//                .login(usrname, pwd)
-//                .compose(TransformUtils.<HttpResult<LogginsBean>>defaultSchedulers())
-//                .subscribe(new HttpResultSubscriber<LogginsBean>() {
-//                    @Override
-//                    public void onStart() {
-//                        callback.onStart();
-//                    }
-//
-//                    @Override
-//                    public void onError(String info, String msg, int code) {
-//                        com.orhanobut.logger.Logger.i("" + msg);
-//                        callback.onDataNotAvailable(msg);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(LogginsBean logginBean) {
-//
-//                        callback.onTaskLoaded(logginBean);
-//                    }
-//
-//
-//                    @Override
-//                    public void onFinished() {
-//                        callback.onCompleted();
-//                    }
-//                });
-//    }
 
 
 
