@@ -25,6 +25,13 @@ import www.shdy.R;
 //手机号注册绑定微信Dialog
 public class PhoneDialog_Weix extends BaseDialogFragment {
 
+    private PhoneonListener Phonelistener;
+
+
+    public interface PhoneonListener {
+        void PhoneOnListener(boolean on);
+    }
+
 
     @Bind(R.id.image_dimess)
     ImageView dimess_img;
@@ -94,8 +101,13 @@ public class PhoneDialog_Weix extends BaseDialogFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.unbtn:
+
+
                 break;
             case R.id.btn:
+
+
+
                 break;
             case R.id.image_dimess:
                 ToastUtils.show("关闭");
