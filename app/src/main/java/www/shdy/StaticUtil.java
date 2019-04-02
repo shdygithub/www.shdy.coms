@@ -17,25 +17,8 @@ public class StaticUtil {
     public static final int NETTYPE_4G = 4;
 
 
-    public static final String 单元 = String.valueOf(60);
+    public static final String Weixin_Appid = "wx2652d74217ba360b";
 
-    public static final String 阶段 = String.valueOf(61);
-
-    public static final String 模拟 = String.valueOf(62);
-
-
-    public static final String 个人 = String.valueOf(1);
-
-    public static final String 企业 = String.valueOf(2);
-
-    public static final String 非企业性单位 = String.valueOf(3);
-
-
-    public static final String 问答 = String.valueOf(1);
-
-    public static final String 知识 = String.valueOf(2);
-
-    public static final String 考试 = String.valueOf(3);
 
 
 }

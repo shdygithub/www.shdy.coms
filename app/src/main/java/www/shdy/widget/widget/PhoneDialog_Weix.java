@@ -11,11 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
+import com.orhanobut.logger.Logger;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import www.shdy.R;
+import www.shdy.entity.EventPhoneWeixBean;
+
+import static www.shdy.StaticUtil.Weixin_Appid;
 
 
 /**
@@ -25,12 +31,6 @@ import www.shdy.R;
 //手机号注册绑定微信Dialog
 public class PhoneDialog_Weix extends BaseDialogFragment {
 
-    private PhoneonListener Phonelistener;
-
-
-    public interface PhoneonListener {
-        void PhoneOnListener(boolean on);
-    }
 
 
     @Bind(R.id.image_dimess)
@@ -41,6 +41,7 @@ public class PhoneDialog_Weix extends BaseDialogFragment {
     Button unbtn;
     @Bind(R.id.btn)
     Button btn;
+    private EventPhoneWeixBean eventPhoneWeixBean;
 
     public static PhoneDialog_Weix newInatance() {
         Bundle args = new Bundle();
@@ -83,7 +84,7 @@ public class PhoneDialog_Weix extends BaseDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
+
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -103,17 +104,20 @@ public class PhoneDialog_Weix extends BaseDialogFragment {
             case R.id.unbtn:
 
 
-                break;
+                eventPhoneWeixBean = new EventPhoneWeixBean(true,false);
+
             case R.id.btn:
 
+                eventPhoneWeixBean = new EventPhoneWeixBean(false,true);
 
-
-                break;
             case R.id.image_dimess:
-                ToastUtils.show("关闭");
+
                 dismiss();
                 break;
 
         }
+
+        //发送粘性事件
+        EventBus.getDefault().postSticky(eventPhoneWeixBean);
     }
 }

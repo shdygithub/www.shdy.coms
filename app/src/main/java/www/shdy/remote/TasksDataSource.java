@@ -10,8 +10,11 @@ import www.shdy.entity.HomeFourNameBean;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.LogginsBean;
+import www.shdy.entity.PhoneWeixBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
+import www.shdy.entity.WeixLoginBean;
+import www.shdy.entity.WeixPhoneBean;
 
 /**
 
@@ -26,7 +29,7 @@ public interface TasksDataSource {
     void release();
 
     /**
-     * 登录
+     * 手机号码登录
      */
     Subscription login(String usrname, String pwd, LoadTaskCallback<LogginsBean> callback);
 
@@ -35,8 +38,14 @@ public interface TasksDataSource {
      */
     Subscription httpcode(String phone, LoadTaskCallback<HttpCodeBean> callback);
 
+    //手机号码绑定微信
+    Subscription phonelogin_weix(String openid,String unionid,String appid,String phone, LoadTaskCallback<PhoneWeixBean> callback);
+
     //微信登录
-    Subscription weixlogin( LoadTaskCallback<Object> callback);
+    Subscription weixlogin(String openid,String unionid,String appid,String nickname,String gender,String avatarUrl, LoadTaskCallback<WeixLoginBean> callback);
+
+    //微信绑定手机号码
+    Subscription weixlogin_phone(String unionid,String phone, LoadTaskCallback<WeixPhoneBean> callback);
 
 
 

@@ -23,9 +23,12 @@ import www.shdy.entity.HomeFourNameBean;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.LogginsBean;
+import www.shdy.entity.PhoneWeixBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
+import www.shdy.entity.WeixLoginBean;
+import www.shdy.entity.WeixPhoneBean;
 import www.shdy.https.HttpManager;
 import www.shdy.https.HttpResult;
 import www.shdy.https.HttpResultSubscriber;
@@ -66,18 +69,18 @@ public class TasksRepositoryProxy implements TasksDataSource {
     //登录
     @Override
     public Subscription login(String usrname, String pwd, final LoadTaskCallback<LogginsBean> callback) {
-        JSONObject  jsusername= new JSONObject();
+
         JSONObject  requestData=new JSONObject();
         try {
             requestData.put("phone",usrname);
             requestData.put("code",pwd);
 
-            jsusername.put("datalist",requestData);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        RequestBody bodypwd= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsusername.toString());
+        RequestBody bodypwd= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), requestData.toString());
         return HttpManager.getInstance().createService(ApiService.class)
                 .login(bodypwd)
                 .compose(TransformUtils.<HttpResult<LogginsBean>>defaultSchedulers())
@@ -142,13 +145,29 @@ public class TasksRepositoryProxy implements TasksDataSource {
                 });
     }
 
-    //   微信登录
+    //   手机号码绑定微信
     @Override
-    public Subscription weixlogin(final LoadTaskCallback<Object> callback) {
+    public Subscription phonelogin_weix(String openid,String unionid,String appid,String phone,final LoadTaskCallback<PhoneWeixBean> callback) {
+
+
+        JSONObject  requestData=new JSONObject();
+        try {
+            requestData.put("openid",openid);
+            requestData.put("unionid",unionid);
+            requestData.put("appid",appid);
+            requestData.put("phone",phone);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody bodylist= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), requestData.toString());
+
         return HttpManager.getInstance().createService(ApiService.class)
-                .weixlogin()
-                .compose(TransformUtils.<HttpResult<Object>>defaultSchedulers())
-                .subscribe(new HttpResultSubscriber<Object>() {
+                .phonelogin_weix(bodylist)
+                .compose(TransformUtils.<HttpResult<PhoneWeixBean>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<PhoneWeixBean>() {
                     @Override
                     public void onStart() {
                         callback.onStart();
@@ -161,9 +180,9 @@ public class TasksRepositoryProxy implements TasksDataSource {
                     }
 
                     @Override
-                    public void onSuccess(Object logginBean) {
+                    public void onSuccess(PhoneWeixBean phoneWeixBean) {
 
-                        callback.onTaskLoaded(logginBean);
+                        callback.onTaskLoaded(phoneWeixBean);
                     }
 
 
@@ -176,6 +195,94 @@ public class TasksRepositoryProxy implements TasksDataSource {
 
 
 
+
+    //   微信登录
+    @Override
+    public Subscription weixlogin(String openid,String unionid,String appid,String nickname,String gender,String avatarUrl,final LoadTaskCallback<WeixLoginBean> callback) {
+
+
+        JSONObject  requestData=new JSONObject();
+        try {
+            requestData.put("openid",openid);
+            requestData.put("unionid",unionid);
+            requestData.put("appid",appid);
+            requestData.put("nickname",nickname);
+            requestData.put("gender",gender);
+            requestData.put("avatarUrl",avatarUrl);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody bodylist= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), requestData.toString());
+
+        return HttpManager.getInstance().createService(ApiService.class)
+                .weixlogin(bodylist)
+                .compose(TransformUtils.<HttpResult<WeixLoginBean>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<WeixLoginBean>() {
+                    @Override
+                    public void onStart() {
+                        callback.onStart();
+                    }
+
+                    @Override
+                    public void onError(String info, String msg, int code) {
+                        com.orhanobut.logger.Logger.i("" + msg);
+                        callback.onDataNotAvailable(msg);
+                    }
+
+                    @Override
+                    public void onSuccess(WeixLoginBean weixLoginBean) {
+                        callback.onTaskLoaded(weixLoginBean);
+                    }
+
+
+                    @Override
+                    public void onFinished() {
+                        callback.onCompleted();
+                    }
+                });
+    }
+
+    //   微信绑定手机号码
+    @Override
+    public Subscription weixlogin_phone(String unionid,String phone,final LoadTaskCallback<WeixPhoneBean> callback) {
+        JSONObject  requestData=new JSONObject();
+        try {
+            requestData.put("unionid",unionid);
+            requestData.put("phone",phone);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody bodylist= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), requestData.toString());
+        return HttpManager.getInstance().createService(ApiService.class)
+                .weixlogin_phone(bodylist)
+                .compose(TransformUtils.<HttpResult<WeixPhoneBean>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<WeixPhoneBean>() {
+                    @Override
+                    public void onStart() {
+                        callback.onStart();
+                    }
+
+                    @Override
+                    public void onError(String info, String msg, int code) {
+                        com.orhanobut.logger.Logger.i("" + msg);
+                        callback.onDataNotAvailable(msg);
+                    }
+
+                    @Override
+                    public void onSuccess(WeixPhoneBean weixLoginBean) {
+                        callback.onTaskLoaded(weixLoginBean);
+                    }
+
+
+                    @Override
+                    public void onFinished() {
+                        callback.onCompleted();
+                    }
+                });
+    }
 
 
 

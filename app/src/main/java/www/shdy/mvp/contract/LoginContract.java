@@ -6,6 +6,9 @@ import www.shdy.basemvp.IView;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.LogginsBean;
+import www.shdy.entity.PhoneWeixBean;
+import www.shdy.entity.WeixLoginBean;
+import www.shdy.entity.WeixPhoneBean;
 
 /**
 
@@ -19,7 +22,10 @@ public interface LoginContract {
 
         void HttpCode(String phone);
 
-        void WeixLogin();
+        void Phonelogin_weix(String openid,String unionid,String appid,String phone);
+
+        void weixlogin(String openid,String unionid,String appid,String nickname,String gender,String avatarUrl);
+
     }
 
     interface loginView extends IView {
@@ -32,9 +38,15 @@ public interface LoginContract {
 
         void loginCodeFailed(String mag);
 
-        void WeixloginSuccess( );
+        void  Phonelogin_weixSuccess(PhoneWeixBean phoneWeixBean);
 
-        void WeixloginFailed(String msg);
+        void  Phonelogin_weixFailed(String msg);
+
+        void weixloginSuccess(WeixLoginBean weixLoginBean);
+
+        void weixloginFailed(String msg);
+
+
 
 
         void showLoading();

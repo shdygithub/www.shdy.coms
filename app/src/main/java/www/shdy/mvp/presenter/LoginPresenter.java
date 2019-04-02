@@ -12,6 +12,9 @@ import www.shdy.data.callback.LoadTaskCallback;
 import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.LogginsBean;
+import www.shdy.entity.PhoneWeixBean;
+import www.shdy.entity.WeixLoginBean;
+import www.shdy.entity.WeixPhoneBean;
 import www.shdy.mvp.contract.LoginContract;
 import www.shdy.remote.TasksRepositoryProxy;
 
@@ -101,22 +104,22 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
         addSubscription(httpcode);
     }
 
+
     @Override
-    public void WeixLogin() {
+    public void Phonelogin_weix(String openid,String unionid,String appid,String phone) {
 
-
-        Subscription weixlogin = TasksRepositoryProxy.getInstance().weixlogin(new LoadTaskCallback<Object>() {
+        Subscription weixlogin = TasksRepositoryProxy.getInstance().phonelogin_weix(openid,unionid,appid,phone,new LoadTaskCallback<PhoneWeixBean>() {
             @Override
-            public void onTaskLoaded(Object httpCodeBean) {
+            public void onTaskLoaded(PhoneWeixBean phoneWeixBean) {
 
-                Log.i(TAG, "onTaskLoaded: "+httpCodeBean);
-                //getView().loginCodeSuccess("");
+                Log.i(TAG, "onTaskLoaded: "+phoneWeixBean);
+                getView().Phonelogin_weixSuccess(phoneWeixBean);
             }
 
             @Override
             public void onDataNotAvailable(String msg) {
                 Log.i(TAG, "onDataNotAvailable: "+msg);
-                getView().loginCodeFailed(msg);
+                getView().Phonelogin_weixFailed(msg);
             }
 
             @Override
@@ -131,4 +134,39 @@ public class LoginPresenter extends BasePresenter<LoginContract.loginView> imple
         });
         addSubscription(weixlogin);
     }
+
+
+    @Override
+    public void weixlogin(String openid,String unionid,String appid,String nickname,String gender,String avatarUrl) {
+
+        Subscription weixlogin = TasksRepositoryProxy.getInstance().weixlogin(openid,unionid,appid,nickname,gender,avatarUrl,new LoadTaskCallback<WeixLoginBean>() {
+            @Override
+            public void onTaskLoaded(WeixLoginBean weixLoginBean) {
+
+                Log.i(TAG, "onTaskLoaded: "+weixLoginBean);
+                getView().weixloginSuccess(weixLoginBean);
+            }
+
+            @Override
+            public void onDataNotAvailable(String msg) {
+                Log.i(TAG, "onDataNotAvailable: "+msg);
+                getView().weixloginFailed(msg);
+            }
+
+            @Override
+            public void onStart() {
+                getView().showLoading();
+            }
+
+            @Override
+            public void onCompleted() {
+                getView().hideLoading();
+            }
+        });
+        addSubscription(weixlogin);
+    }
+
+
+
+
 }

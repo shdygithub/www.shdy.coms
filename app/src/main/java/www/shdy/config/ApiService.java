@@ -28,9 +28,12 @@ import www.shdy.entity.KnowledgeSearchBean;
 import www.shdy.entity.LogginBean;
 import www.shdy.entity.LogginsBean;
 import www.shdy.entity.NewsPageBean;
+import www.shdy.entity.PhoneWeixBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
+import www.shdy.entity.WeixLoginBean;
+import www.shdy.entity.WeixPhoneBean;
 import www.shdy.https.HttpResult;
 
 
@@ -43,7 +46,7 @@ public interface ApiService {
      * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
      */
 
-    @POST("user/login")
+    @POST("app/user/login")
     Observable<HttpResult<LogginsBean>> login(@Body RequestBody body);
 
 
@@ -52,14 +55,20 @@ public interface ApiService {
      * 方式:POST
      * 参数:{"username":"jxnk25","passwd":"sfsdsdsd","time":1538039158747,"sign":"be46fce7daef59fcf56b6be5fbb3d60d"}
      */
-    @POST("user/getValidateCode/{phone}")
+    @POST("app/user/getValidateCode/{phone}")
     Observable<HttpResult<HttpCodeBean>> httpcode(@Path("phone") String phone);
 
 
 
     //微信登录
-    @POST("")
-    Observable<HttpResult<Object>> weixlogin();
+    @POST("app/user/bindWx")
+    Observable<HttpResult<PhoneWeixBean>> phonelogin_weix(@Body RequestBody body);
+
+    @POST("app/user/wxLogin")
+    Observable<HttpResult<WeixLoginBean>> weixlogin(@Body RequestBody body);
+
+    @POST("app/user/bindPhone ")
+    Observable<HttpResult<WeixPhoneBean>> weixlogin_phone(@Body RequestBody body);
 
 
 
