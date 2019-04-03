@@ -28,6 +28,7 @@ import www.shdy.entity.PhoneWeixBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
+import www.shdy.entity.VideoHomeFragmentBean;
 import www.shdy.entity.WeixLoginBean;
 import www.shdy.entity.WeixPhoneBean;
 import www.shdy.https.HttpManager;
@@ -288,6 +289,51 @@ public class TasksRepositoryProxy implements TasksDataSource {
                     }
                 });
     }
+
+    @Override
+    public Subscription videohome_fragment(String position ,final LoadTaskCallback<VideoHomeFragmentBean> callback) {
+        JSONObject  requestData=new JSONObject();
+        try {
+            requestData.put("position",position);
+         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody bodylist= RequestBody.create(MediaType.parse("application/json; charset=utf-8"), requestData.toString());
+        return HttpManager.getInstance().createService(ApiService.class)
+                .videohome_fragment(bodylist)
+                .compose(TransformUtils.<HttpResult<VideoHomeFragmentBean>>defaultSchedulers())
+                .subscribe(new HttpResultSubscriber<VideoHomeFragmentBean>() {
+                    @Override
+                    public void onStart() {
+                        callback.onStart();
+                    }
+
+                    @Override
+                    public void onError(String info, String msg, int code) {
+
+                        callback.onDataNotAvailable(msg);
+                    }
+
+                    @Override
+                    public void onSuccess(VideoHomeFragmentBean videoHomeFragmentBean) {
+
+
+                        callback.onTaskLoaded(videoHomeFragmentBean);
+                    }
+
+
+                    @Override
+                    public void onFinished() {
+                        callback.onCompleted();
+                    }
+                });
+    }
+
+
+
+
+
+
 
 
 

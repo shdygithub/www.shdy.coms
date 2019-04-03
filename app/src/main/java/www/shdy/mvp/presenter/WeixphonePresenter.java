@@ -9,6 +9,7 @@ import com.orhanobut.logger.Logger;
 import rx.Subscription;
 import www.shdy.basemvp.BasePresenter;
 import www.shdy.data.callback.LoadTaskCallback;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginsBean;
 import www.shdy.entity.WeixPhoneBean;
 import www.shdy.mvp.contract.WeixphoneContract;
@@ -54,5 +55,40 @@ public class WeixphonePresenter  extends BasePresenter<WeixphoneContract.Weixpho
             }
         });
         addSubscription(weixlogin);
+    }
+
+    @Override
+    public void HttpCode(String phone) {
+
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtils.show("请填写手机号码");
+            return;
+        }
+
+        Subscription httpcode = TasksRepositoryProxy.getInstance().httpcode(phone, new LoadTaskCallback<HttpCodeBean>() {
+            @Override
+            public void onTaskLoaded(HttpCodeBean httpCodeBean) {
+
+                Log.i(TAG, "onTaskLoaded: "+httpCodeBean.getCode());
+                getView().loginCodeSuccess(httpCodeBean);
+            }
+
+            @Override
+            public void onDataNotAvailable(String msg) {
+                Log.i(TAG, "onDataNotAvailable: "+msg);
+                getView().loginCodeFailed(msg);
+            }
+
+            @Override
+            public void onStart() {
+                getView().showLoading();
+            }
+
+            @Override
+            public void onCompleted() {
+                getView().hideLoading();
+            }
+        });
+        addSubscription(httpcode);
     }
 }

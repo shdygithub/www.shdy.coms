@@ -105,7 +105,7 @@ dependencies {
     //圆角图片
     api 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     //glide
-    api 'com.github.bumptech.glide:glide:3.8.0'
+    api 'com.github.bumptech.glide:glide:3.7.0'
     //版本 23以上（必须）
     implementation 'com.android.support:design:27+'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
@@ -126,8 +126,9 @@ dependencies {
     implementation files('libs/umeng-sharetool-6.9.4.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.4.jar')
     implementation 'com.orhanobut:logger:2.2.0'
-    implementation 'com.xhb:xbanner:1.5.1'
-    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
+
+    implementation 'com.github.xiaohaibin:XBanner:1.6.4'
+     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
     //图片上传框架
     implementation 'com.kongzue.takephoto:takephoto:2.0.8'
     //图片选择框架

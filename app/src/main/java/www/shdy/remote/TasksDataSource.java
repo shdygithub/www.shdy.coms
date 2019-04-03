@@ -13,6 +13,7 @@ import www.shdy.entity.LogginsBean;
 import www.shdy.entity.PhoneWeixBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
+import www.shdy.entity.VideoHomeFragmentBean;
 import www.shdy.entity.WeixLoginBean;
 import www.shdy.entity.WeixPhoneBean;
 
@@ -46,6 +47,9 @@ public interface TasksDataSource {
 
     //微信绑定手机号码
     Subscription weixlogin_phone(String unionid,String phone, LoadTaskCallback<WeixPhoneBean> callback);
+
+    //微信绑定手机号码
+    Subscription videohome_fragment(String position ,LoadTaskCallback<VideoHomeFragmentBean> callback);
 
 
 

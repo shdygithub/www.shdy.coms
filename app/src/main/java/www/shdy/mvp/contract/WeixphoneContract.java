@@ -2,6 +2,7 @@ package www.shdy.mvp.contract;
 
 import www.shdy.basemvp.IModel;
 import www.shdy.basemvp.IView;
+import www.shdy.entity.HttpCodeBean;
 import www.shdy.entity.LogginsBean;
 import www.shdy.entity.WeixPhoneBean;
 
@@ -11,6 +12,7 @@ public interface WeixphoneContract {
 
         void WeixphoneData(String unid,String phone);
 
+        void HttpCode(String phone);
     }
 
 
@@ -20,7 +22,9 @@ public interface WeixphoneContract {
 
         void WeixphoneFailed(String msg);
 
+        void loginCodeSuccess(HttpCodeBean codeBean);
 
+        void loginCodeFailed(String mag);
 
         void showLoading();
 

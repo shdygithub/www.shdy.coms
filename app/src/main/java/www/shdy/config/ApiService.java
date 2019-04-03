@@ -32,6 +32,7 @@ import www.shdy.entity.PhoneWeixBean;
 import www.shdy.entity.RegisterBean;
 import www.shdy.entity.UpImage;
 import www.shdy.entity.UsetBean;
+import www.shdy.entity.VideoHomeFragmentBean;
 import www.shdy.entity.WeixLoginBean;
 import www.shdy.entity.WeixPhoneBean;
 import www.shdy.https.HttpResult;
@@ -64,11 +65,18 @@ public interface ApiService {
     @POST("app/user/bindWx")
     Observable<HttpResult<PhoneWeixBean>> phonelogin_weix(@Body RequestBody body);
 
+    //微信登录
     @POST("app/user/wxLogin")
     Observable<HttpResult<WeixLoginBean>> weixlogin(@Body RequestBody body);
 
+    //微信绑定手机号码
     @POST("app/user/bindPhone ")
     Observable<HttpResult<WeixPhoneBean>> weixlogin_phone(@Body RequestBody body);
+
+
+    //视频首页Banner
+    @POST("app/video/getBannnerAndHotColumn")
+    Observable<HttpResult<VideoHomeFragmentBean>> videohome_fragment(@Body RequestBody body);
 
 
 
